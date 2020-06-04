@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<!--suppress ALL -->
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>pie</title>
+    <script>
+        window.devicePixelRatio = 2;
+    </script>
+    <script src="../static/echarts.min.js"></script>
+    <script src="../static/jquery.min.js"></script>
+
+
+</head>
+
+<body onload="start()" style="background-color: #F5F5F5;">
+
+
+<div style="font-size: 40px;left: 100px;margin-left: 200px;margin-bottom: 50px">HapChart:一个绘制动态单倍型网络图的软件</div>
+
+    <div style="float: left;width: 300px;height: 600px;background-color:#C8C8C8;margin-right: 30px;border-radius: 20px;">
+    <div style="font-size: 20px;margin-left: 10px;margin-top: 15px">up load your nexus file</div>
+    <input type="file" style="width: 150px;height: 70px" id="file" name="file"><br><br>
+    <button id="submit" style="width: 80px;height: 20px" >提交</button>
+
+
+
+    
+</div>
+
+
+    <script>
+
+        $('#submit').click(function () {
+
+            var file = $('#file')[0].files[0];
+            var formData = new FormData();
+            formData.append('file',file )
+            $.ajax(
+                {
+                    url:'/home/',
+                    dataType:'json',
+                    type:'post',
+                    data:formData,
+                    contentType : false,
+                    processData:false,
+                    success:function (data) {
+                         data_pos = data.data_pos;
+                         radius = data.radius;
+                         line = data.lines;
+                         dataset = data.dataset;
+                         sum = data.sum;
+                         title = data.title;
+                        gap = data.gap;
+
+                        start()
+                    }
+                }
+            )
+        })
+
+
+    </script>
+
+
+
+
+
+<div  id="main" style="float:left;margin-left: 200px;width: 800px;height: 600px;border: red solid 2px;right: 200px;background-color: #C8C8C8"></div>
+    <!-- <div  id="main" style="float:left;width: 1300px;height: 800px;border: red solid 2px"></div> -->
+
+
+    <script type="text/javascript">
+
+
+
+
+
+
+         var data_pos = [[200.2, 250.3], [600.2, 200.5], [600.55, 400.55], [300.515, 400.5616], [600, 500]];
+         var radius = [40.5, 33, 19, 17, 20];
+         var title = ['Hap 1', 'Hapl 2', 'Hap 3', 'Hapl 4', 'Hap 5'];
+         var sum = [843, 579, 197, 152, 79]
+         var gap = [[1.0, 5.0], [1.0, 4.0, 4.0], [4.0], [4.0], [5.0]]
+         var line = [[1, 4], [0, 2, 3], [1], [1], [0]]
+         var dataset = {
+             source: [
+                 ['TraitLabels', 'Haplotype 1', 'Haplotype 2', 'Haplotype 3', 'Haplotype 4', 'Haplotype 5'],
+                 ['ind', 719, 6, 18, 1, 73],
+                 ['jap', 26, 476, 5, 132, 0],
+                 ['aus', 9, 1, 61, 0, 0],
+                 ['wild', 68, 85, 87, 14, 4],
+                 ['other', 21, 11, 26, 5, 2]
+
+             ]
+         };
+
+
+
+
+    </script>
+<script src="/static/jsss.js"></script>
+
+
+</body>
+
+</html>
